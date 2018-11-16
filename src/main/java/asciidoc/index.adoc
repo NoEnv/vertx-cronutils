@@ -1,0 +1,28 @@
+= Vert.x-CronUtils
+:toc: left
+
+Vert.x-CronUtils is an implementation of the cron-utils library for Vert.x.
+
+This module allows scheduling tasks with unix cron expressions.
+
+== Using Vert.x-CronUtils
+
+To use the Vert.x Cron-Utils, add the following dependency to the _dependencies_ section of your build descriptor:
+
+* Maven (in your `pom.xml`):
+
+[source,xml,subs="+attributes"]
+----
+<dependency>
+<groupId>com.noenv</groupId>
+<artifactId>vertx-cronutils</artifactId>
+<version>3.6-SNAPSHOT</version>
+</dependency>
+----
+
+* Gradle (in your `build.gradle` file):
+
+[source,groovy,subs="+attributes"]
+----
+compile 'com.noenv:vertx-cronutils:3.6-SNAPSHOT'
+----
