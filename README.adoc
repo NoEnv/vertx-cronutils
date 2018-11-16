@@ -1,6 +1,6 @@
 = Cron Utils
 
-An abstraction of cron-util for the vertx scheduler
+An abstraction of cron-utils for the vertx scheduler
 
 Please see the main documentation on the web-site for a full description:
 
