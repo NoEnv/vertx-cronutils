@@ -36,4 +36,13 @@ public class CronSchedulerTest extends VertxTestBase {
     CronScheduler
       .create(vertx, "broken expression");
   }
+
+  @Test(expected=IllegalArgumentException.class)
+  public void testDoubleRegistration() throws IllegalArgumentException {
+    CronScheduler
+      .create(vertx, "0/1 * * * * ?")
+      .schedule(s -> System.out.println("register once"))
+      .schedule(s -> System.out.println("register twice"))
+      .cancel();
+  }
 }
