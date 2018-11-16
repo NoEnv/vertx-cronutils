@@ -2,10 +2,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:9-jdk
     working_directory: ~/repo
     environment:
-      MAVEN_OPTS: -Xmx1024m -Djdk.net.URLClassPath.disableClassPathURLCheck=true
+      MAVEN_OPTS: -Xmx1024m
     steps:
       - checkout
       - restore_cache:
