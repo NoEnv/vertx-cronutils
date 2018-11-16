@@ -1,3 +1,5 @@
+image:https://circleci.com/gh/NoEnv/vertx-cronutils.svg?style=svg["Build Status",link="https://circleci.com/gh/NoEnv/vertx-cronutils"]
+
 = Cron Utils
 
 An abstraction of cron-utils for the vertx scheduler
