@@ -33,8 +33,5 @@ public interface CronScheduler {
   @Fluent
   CronScheduler schedule(Handler<CronScheduler> handler);
 
-  /**
-   * Cancel the scheduler
-   */
   void cancel();
 }
