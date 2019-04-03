@@ -5,7 +5,7 @@
 
   <groupId>com.noenv</groupId>
   <artifactId>vertx-cronutils</artifactId>
-  <version>4.0.0-SNAPSHOT</version>
+  <version>3.7.0</version>
 
   <parent>
     <groupId>io.vertx</groupId>
@@ -18,7 +18,7 @@
   <url>http://github.com/NoEnv/vertx-cronutils</url>
 
   <properties>
-    <stack.version>4.0.0-SNAPSHOT</stack.version>
+    <stack.version>3.7.0</stack.version>
     <asciidoc.dir>${project.basedir}/src/main/asciidoc</asciidoc.dir>
     <cronutils.version>8.0.0</cronutils.version>
     <doc.skip>true</doc.skip>
@@ -55,7 +55,7 @@
   <scm>
     <connection>scm:git:git://github.com/noenv/vertx-cronutils.git</connection>
     <developerConnection>scm:git:ssh://github.com:noenv/vertx-cronutils.git</developerConnection>
-    <url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+    <url>http://github.com/noenv/vertx-cronutils</url>
   </scm>
 
   <dependencies>
@@ -145,7 +145,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.2</version>
+        <version>0.8.3</version>
         <executions>
           <execution>
             <id>pre-unit-test</id>
