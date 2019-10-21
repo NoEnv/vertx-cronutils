@@ -5,7 +5,7 @@
 
   <groupId>com.noenv</groupId>
   <artifactId>vertx-cronutils</artifactId>
-  <version>3.8.2</version>
+  <version>3.8.3</version>
 
   <parent>
     <groupId>io.vertx</groupId>
