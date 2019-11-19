@@ -184,6 +184,29 @@
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven.javadoc.plugin.version}</version>
+            <executions>
+              <execution>
+              <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <sourceFileExcludes>
+                <sourceFileExclude>**/package-info.java</sourceFileExclude>
+                <sourceFileExclude>**/impl/**</sourceFileExclude>
+              </sourceFileExcludes>
+              <sourceFileIncludes>
+                <sourceFileInclude>com/noenv/**/*.java</sourceFileInclude>
+              </sourceFileIncludes>
+              <additionalparam>-Xdoclint:none &#45;&#45;allow-script-in-comments</additionalparam>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <version>1.6</version>
             <executions>
