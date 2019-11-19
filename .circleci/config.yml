@@ -19,5 +19,5 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn deploy -Dgpg.passphrase=$SECRING_GPG_PASSPHRASE
+      - run: mvn deploy -Drelease=true -Dgpg.passphrase=$SECRING_GPG_PASSPHRASE
       - run: bash <(curl -s https://codecov.io/bash)

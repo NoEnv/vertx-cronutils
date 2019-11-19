@@ -19,9 +19,7 @@
 
   <properties>
     <stack.version>3.8.3</stack.version>
-    <asciidoc.dir>${project.basedir}/src/main/asciidoc</asciidoc.dir>
     <cronutils.version>9.0.1</cronutils.version>
-    <doc.skip>true</doc.skip>
   </properties>
 
   <dependencyManagement>
@@ -35,6 +33,10 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <organization>
+    <name>NoEnv</name>
+  </organization>
 
   <licenses>
     <license>
@@ -82,11 +84,6 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-docgen</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-lang-groovy</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -171,56 +168,44 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-            <configuration>
-              <gpgArguments>
-                <arg>--pinentry-mode</arg>
-                <arg>loopback</arg>
-              </gpgArguments>
-              <keyname>${gpg.keyname}</keyname>
-              <passphraseServerId>${gpg.keyname}</passphraseServerId>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>sign</id>
+      <activation>
+        <property>
+          <name>release</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <distributionManagement>
     <snapshotRepository>
@@ -231,5 +216,5 @@
       <id>ossrh</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
-   </distributionManagement>
+  </distributionManagement>
 </project>
