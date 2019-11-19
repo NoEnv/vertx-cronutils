@@ -12,10 +12,11 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
           - v1-dependencies-
+      - run: echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
       - run: mvn dependency:go-offline
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn integration-test
+      - run: mvn verify -Dgpg.passphrase=$SECRING_GPG_PASSPHRASE
       - run: bash <(curl -s https://codecov.io/bash)
