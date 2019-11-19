@@ -1,5 +1,6 @@
 image:https://circleci.com/gh/NoEnv/vertx-cronutils.svg?style=svg["Build Status",link="https://circleci.com/gh/NoEnv/vertx-cronutils"]
 image:https://codecov.io/gh/NoEnv/vertx-cronutils/branch/master/graph/badge.svg["Code Coverage",link="https://codecov.io/gh/NoEnv/vertx-cronutils"]
+image:https://img.shields.io/maven-central/v/com.noenv/vertx-cronutils[Maven Central]
 
 = Cron Utils
 
