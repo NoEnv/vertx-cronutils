@@ -37,9 +37,9 @@ You can create cron schedulers using the following flavours `Unix`, `Cron4j` and
 [source,java]
 ----
 CronScheduler
-    .create(vertx, "0/1 * * * * ?") //trigger every second
-    .schedule(id ->
-        System.out.println("timer "+id+" triggered")
+    .create(vertx, "0/1 * * * * ?", CronType.QUARTZ) //trigger every second
+    .schedule(s ->
+        System.out.println("timer triggered")
     );
 ----
 

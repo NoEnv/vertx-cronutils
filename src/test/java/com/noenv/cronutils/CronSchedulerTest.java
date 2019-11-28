@@ -1,5 +1,6 @@
 package com.noenv.cronutils;
 
+import com.cronutils.model.CronType;
 import io.vertx.test.core.VertxTestBase;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class CronSchedulerTest extends VertxTestBase {
   public void testCronExpression() throws IllegalArgumentException, InterruptedException {
     final CountDownLatch latch = new CountDownLatch(3);
     CronScheduler scheduler = CronScheduler
-      .create(vertx, "0/1 * * * * ?")
+      .create(vertx, "0/1 * * * * ?", CronType.QUARTZ)
       .schedule(s -> latch.countDown());
     latch.await(5, TimeUnit.SECONDS);
     scheduler.cancel();

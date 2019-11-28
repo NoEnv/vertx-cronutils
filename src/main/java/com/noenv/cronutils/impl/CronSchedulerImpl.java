@@ -27,10 +27,10 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
   private long timerId;
   private ZonedDateTime executionTime;
 
-  public CronSchedulerImpl(final Vertx vertx, final String cronExpression) {
+  public CronSchedulerImpl(final Vertx vertx, final String cronExpression, final CronType type) {
     this.vertx = vertx;
 
-    final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(CronType.QUARTZ);
+    final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(type);
     final CronParser parser = new CronParser(definition);
     this.expression = ExecutionTime.forCron(parser.parse(cronExpression));
   }
