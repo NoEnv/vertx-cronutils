@@ -14,9 +14,9 @@ To use the Vert.x Cron-Utils, add the following dependency to the _dependencies_
 [source,xml,subs="+attributes"]
 ----
 <dependency>
-<groupId>com.noenv</groupId>
-<artifactId>vertx-cronutils</artifactId>
-<version>${maven.version}</version>
+  <groupId>com.noenv</groupId>
+  <artifactId>vertx-cronutils</artifactId>
+  <version>${maven.version}</version>
 </dependency>
 ----
 
@@ -25,4 +25,18 @@ To use the Vert.x Cron-Utils, add the following dependency to the _dependencies_
 [source,groovy,subs="+attributes"]
 ----
 compile 'com.noenv:vertx-cronutils:${maven.version}'
+----
+
+== Creating a cron scheduler
+
+You can create cron schedulers using the following flavours `Unix`, `Cron4j` and `Quartz`
+
+[source,$lang]
+----
+{@link examples.CronSchedulerExamples#example1}
+----
+
+[source,$lang]
+----
+{@link examples.CronSchedulerExamples#example2}
 ----

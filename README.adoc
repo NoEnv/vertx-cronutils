@@ -2,14 +2,53 @@ image:https://circleci.com/gh/NoEnv/vertx-cronutils.svg?style=svg["Build Status"
 image:https://codecov.io/gh/NoEnv/vertx-cronutils/branch/master/graph/badge.svg["Code Coverage",link="https://codecov.io/gh/NoEnv/vertx-cronutils"]
 image:https://img.shields.io/maven-central/v/com.noenv/vertx-cronutils["Maven Central",link="https://search.maven.org/artifact/com.noenv/vertx-cronutils"]
 
-= Cron Utils
+= Vert.x-CronUtils
 
-An abstraction of cron-utils for the vertx scheduler
+Vert.x-CronUtils is an implementation of the cron-utils library for Vert.x.
 
-Please see the main documentation on the web-site for a full description:
+This module allows scheduling tasks with unix cron expressions.
 
-* https://noenv.com/docs/vertx-cron-utils/java/[Java documentation]
-* https://noenv.com/docs/vertx-cron-utils/js/[JavaScript documentation]
-* https://noenv.com/docs/vertx-cron-utils/kotlin/[Kotlin documentation]
-* https://noenv.com/docs/vertx-cron-utils/groovy/[Groovy documentation]
-* https://noenv.com/docs/vertx-cron-utils/ruby/[Ruby documentation]
+== Using Vert.x-CronUtils
+
+To use the Vert.x Cron-Utils, add the following dependency to the _dependencies_ section of your build descriptor:
+
+* Maven (in your `pom.xml`):
+
+[source,xml,subs="+attributes"]
+----
+<dependency>
+  <groupId>com.noenv</groupId>
+  <artifactId>vertx-cronutils</artifactId>
+  <version>3.8.3</version>
+</dependency>
+----
+
+* Gradle (in your `build.gradle` file):
+
+[source,groovy,subs="+attributes"]
+----
+compile 'com.noenv:vertx-cronutils:3.8.3'
+----
+
+== Creating a cron scheduler
+
+You can create cron schedulers using the following flavours `Unix`, `Cron4j` and `Quartz`
+
+[source,java]
+----
+CronScheduler
+    .create(vertx, "0/1 * * * * ?") //trigger every second
+    .schedule(id ->
+        System.out.println("timer "+id+" triggered")
+    );
+----
+
+[source,java]
+----
+CronScheduler
+    .create(vertx, "0 * * * * ?") //trigger every minute
+    .schedule(s -> {
+        s.cancel();
+        System.out.println("timer triggered and canceled");
+    });
+----
