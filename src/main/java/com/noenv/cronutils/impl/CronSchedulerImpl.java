@@ -74,6 +74,10 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
 
   private long getNextDelay(final ZonedDateTime time) {
     final Duration timeToNextExecution = Duration.between(time, executionTime);
-    return timeToNextExecution.toMillis();
+    // If the program is paused for long enough (debugging) and a task is scheduled to run frequently,
+    // the newly calculated execution time can be less than current time, that could cause negative value here.
+    // With this solution the missed runs will happen in a burst after the pause until it catches up.
+    // (Vertx does not allow to set a timer with delay < 1 ms)
+    return Math.max(1, timeToNextExecution.toMillis());
   }
 }
