@@ -5,12 +5,12 @@
 
   <groupId>com.noenv</groupId>
   <artifactId>vertx-cronutils</artifactId>
-  <version>3.9.3-SNAPSHOT</version>
+  <version>3.9.3</version>
 
   <parent>
     <groupId>io.vertx</groupId>
     <artifactId>vertx-ext-parent</artifactId>
-    <version>35</version>
+    <version>37</version>
   </parent>
 
   <name>vertx-cronutils</name>
@@ -18,8 +18,8 @@
   <url>http://github.com/NoEnv/vertx-cronutils</url>
 
   <properties>
-    <stack.version>3.9.3-SNAPSHOT</stack.version>
-    <cronutils.version>9.1.0</cronutils.version>
+    <stack.version>3.9.3</stack.version>
+    <cronutils.version>9.1.1</cronutils.version>
   </properties>
 
   <dependencyManagement>
