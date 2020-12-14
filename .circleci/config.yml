@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
@@ -12,12 +12,37 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
           - v1-dependencies-
-      - run: echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
       - run: mkdir -p ~/.m2 && echo $SETTINGS_BASE64 | base64 --decode > ~/.m2/settings.xml
       - run: mvn dependency:go-offline
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn deploy -Drelease=true -Dgpg.passphrase=$SECRING_GPG_PASSPHRASE
+      - run: mvn -q verify -B
       - run: bash <(curl -s https://codecov.io/bash)
+  deploy:
+    docker:
+      - image: circleci/openjdk:9-jdk
+    working_directory: ~/repo
+    environment:
+      MAVEN_OPTS: -Xmx1024m
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "pom.xml" }}
+          - v1-dependencies-
+      - run: echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
+      - run: mvn deploy -Drelease=true -Dgpg.passphrase=$SECRING_GPG_PASSPHRASE -DskipTests -B
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
