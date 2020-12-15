@@ -135,26 +135,17 @@
         <version>0.8.6</version>
         <executions>
           <execution>
-            <id>pre-unit-test</id>
+            <id>default-prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
-            <configuration>
-              <destFile>${sonar.jacoco.reportPath}</destFile>
-              <propertyName>surefireArgLine</propertyName>
-            </configuration>
           </execution>
-
           <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
+            <id>default-report</id>
+            <phase>prepare-package</phase>
             <goals>
               <goal>report</goal>
             </goals>
-            <configuration>
-              <dataFile>${sonar.jacoco.reportPath}</dataFile>
-              <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
-            </configuration>
           </execution>
         </executions>
       </plugin>
