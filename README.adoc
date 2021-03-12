@@ -19,7 +19,7 @@ To use the Vert.x Cron-Utils, add the following dependency to the _dependencies_
 <dependency>
   <groupId>com.noenv</groupId>
   <artifactId>vertx-cronutils</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
 </dependency>
 ----
 
@@ -27,7 +27,7 @@ To use the Vert.x Cron-Utils, add the following dependency to the _dependencies_
 
 [source,groovy,subs="+attributes"]
 ----
-compile 'com.noenv:vertx-cronutils:4.0.2'
+compile 'com.noenv:vertx-cronutils:4.0.3'
 ----
 
 == Creating a cron scheduler
