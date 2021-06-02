@@ -5,7 +5,7 @@
 
   <groupId>com.noenv</groupId>
   <artifactId>vertx-cronutils</artifactId>
-  <version>4.1.0</version>
+  <version>4.1.1-SNAPSHOT</version>
 
   <parent>
     <groupId>io.vertx</groupId>
@@ -18,7 +18,7 @@
   <url>http://github.com/NoEnv/vertx-cronutils</url>
 
   <properties>
-    <stack.version>4.1.0</stack.version>
+    <stack.version>4.1.1-SNAPSHOT</stack.version>
     <cronutils.version>9.1.5</cronutils.version>
   </properties>
 
