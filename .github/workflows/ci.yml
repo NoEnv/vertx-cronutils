@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ main, '[0-9]+.[0-9]+' ]
 
-env:
-  MAVEN_OPTS: -Xmx1024m
-
 jobs:
   build:
     name: Build And Test
@@ -26,8 +23,7 @@ jobs:
         run: mvn -B verify
       - name: codecov
         uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+
   deploy:
     name: Deploy to OSSRH
     if: ${{ github.event_name == 'push' }}
@@ -53,4 +49,3 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
