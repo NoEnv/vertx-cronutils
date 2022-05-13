@@ -29,6 +29,7 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
 
   public CronSchedulerImpl(final Vertx vertx, final String cronExpression, final CronType type) {
     this.vertx = vertx;
+    this.timerId = -1L;
 
     final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(type);
     final CronParser parser = new CronParser(definition);
@@ -42,12 +43,7 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
       throw new IllegalArgumentException("Scheduler is already registered.");
     }
     this.handler = handler;
-    final ZonedDateTime now = ZonedDateTime.now();
-    expression.nextExecution(now).ifPresent(next -> {
-      executionTime = next;
-      final long delay = getNextDelay(now);
-      timerId = vertx.setTimer(delay, this);
-    });
+    scheduleNextTimer(0L);
     return this;
   }
 
@@ -56,20 +52,34 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
     if (vertx.cancelTimer(timerId)) {
       this.handler = null;
     }
+    timerId = -1L;
   }
 
   @Override
   public final void handle(final Long id) {
+    timerId = -1L;
     if (handler == null) {
       return;
     }
+    scheduleNextTimer(20L);
+    handler.handle(this);
+  }
+
+  @Override
+  public boolean active() {
+    return timerId >= 0L;
+  }
+
+  private void scheduleNextTimer(final long addMilliseconds) {
     final ZonedDateTime now = ZonedDateTime.now();
+    if(executionTime == null) {
+      executionTime = now;
+    }
     expression.nextExecution(executionTime).ifPresent(next -> {
       executionTime = next;
       final long delay = getNextDelay(now);
-      timerId = vertx.setTimer(delay + 20, this);
+      timerId = vertx.setTimer(delay + addMilliseconds, this);
     });
-    handler.handle(this);
   }
 
   private long getNextDelay(final ZonedDateTime time) {

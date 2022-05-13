@@ -47,4 +47,6 @@ public interface CronScheduler {
   CronScheduler schedule(Handler<CronScheduler> handler);
 
   void cancel();
+
+  boolean active();
 }
