@@ -19,7 +19,7 @@
 
   <properties>
     <stack.version>4.3.3-SNAPSHOT</stack.version>
-    <cronutils.version>9.1.8</cronutils.version>
+    <cronutils.version>9.2.0</cronutils.version>
   </properties>
 
   <dependencyManagement>
