@@ -1,8 +1,11 @@
 package com.noenv.cronutils;
 
 import com.cronutils.model.CronType;
+import com.cronutils.model.definition.CronDefinition;
+import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.noenv.cronutils.impl.CronSchedulerImpl;
 import io.vertx.codegen.annotations.Fluent;
+import io.vertx.codegen.annotations.GenIgnore;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
@@ -23,7 +26,8 @@ public interface CronScheduler {
    * @return the instance
    */
   static CronScheduler create(Vertx vertx, String cron) {
-    return new CronSchedulerImpl(vertx, cron, CronType.QUARTZ);
+    final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(CronType.QUARTZ);
+    return new CronSchedulerImpl(vertx, cron, definition);
   }
 
   /**
@@ -35,7 +39,21 @@ public interface CronScheduler {
    * @return the instance
    */
   static CronScheduler create(Vertx vertx, String cron, CronType type) {
-    return new CronSchedulerImpl(vertx, cron, type);
+    final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(type);
+    return new CronSchedulerImpl(vertx, cron, definition);
+  }
+
+  /**
+   * Create a CronScheduler.
+   *
+   * @param vertx       the Vert.x instance
+   * @param cron        the cron expression
+   * @param definition  the cron definition
+   * @return the instance
+   */
+  @GenIgnore
+  static CronScheduler create(Vertx vertx, String cron, CronDefinition definition) {
+    return new CronSchedulerImpl(vertx, cron, definition);
   }
 
   /**

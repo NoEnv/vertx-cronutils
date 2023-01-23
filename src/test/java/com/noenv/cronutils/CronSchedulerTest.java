@@ -1,9 +1,12 @@
 package com.noenv.cronutils;
 
 import com.cronutils.model.CronType;
+import com.cronutils.model.definition.CronConstraintsFactory;
+import com.cronutils.model.definition.CronDefinitionBuilder;
 import io.vertx.test.core.VertxTestBase;
 import org.junit.Test;
 
+import java.time.YearMonth;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -81,5 +84,27 @@ public class CronSchedulerTest extends VertxTestBase {
       .create(vertx, "0 0 * * * ?", CronType.QUARTZ);
     MILLISECONDS.sleep(100L);
     assertFalse(scheduler.active());
+  }
+
+  @Test
+  public void testCronCustomDefinition() throws IllegalArgumentException, InterruptedException {
+    final CountDownLatch latch = new CountDownLatch(3);
+    final int maxYear = YearMonth.now().getYear() + 1000;
+    CronScheduler scheduler = CronScheduler
+      .create(vertx, "0/1 * * * * ? 2000-" + maxYear, CronDefinitionBuilder.defineCron()
+        .withSeconds().withValidRange(0, 59).and()
+        .withMinutes().withValidRange(0, 59).and()
+        .withHours().withValidRange(0, 23).and()
+        .withDayOfMonth().withValidRange(1, 31).supportsL().supportsW().supportsLW().supportsQuestionMark().and()
+        .withMonth().withValidRange(1, 12).and()
+        .withDayOfWeek().withValidRange(1, 7).withMondayDoWValue(2).supportsHash().supportsL().supportsQuestionMark().and()
+        .withYear().withValidRange(1970, maxYear).withStrictRange().optional().and()
+        .withCronValidation(CronConstraintsFactory.ensureEitherDayOfWeekOrDayOfMonth())
+        .instance())
+      .schedule(s -> latch.countDown());
+    latch.await(5, TimeUnit.SECONDS);
+    assertTrue(scheduler.active());
+    scheduler.cancel();
+    assertEquals(0, latch.getCount());
   }
 }

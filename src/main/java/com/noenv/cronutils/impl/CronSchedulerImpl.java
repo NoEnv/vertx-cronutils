@@ -1,8 +1,6 @@
 package com.noenv.cronutils.impl;
 
-import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinition;
-import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.model.time.ExecutionTime;
 import com.cronutils.parser.CronParser;
 import com.noenv.cronutils.CronScheduler;
@@ -27,11 +25,10 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
   private long timerId;
   private ZonedDateTime executionTime;
 
-  public CronSchedulerImpl(final Vertx vertx, final String cronExpression, final CronType type) {
+  public CronSchedulerImpl(final Vertx vertx, final String cronExpression, final CronDefinition definition) {
     this.vertx = vertx;
     this.timerId = -1L;
 
-    final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(type);
     final CronParser parser = new CronParser(definition);
     this.expression = ExecutionTime.forCron(parser.parse(cronExpression));
   }
