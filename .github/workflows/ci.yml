@@ -22,7 +22,7 @@ jobs:
       - name: build and test
         run: mvn -B verify
       - name: codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
 
   deploy:
     name: Deploy to OSSRH
