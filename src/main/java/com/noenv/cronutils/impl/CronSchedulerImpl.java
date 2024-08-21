@@ -8,6 +8,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 
 import java.time.Duration;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -21,13 +22,15 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
 
   private final Vertx vertx;
   private final ExecutionTime expression;
+  private final ZoneId zoneId;
   private Handler<CronScheduler> handler;
   private long timerId;
   private ZonedDateTime executionTime;
 
-  public CronSchedulerImpl(final Vertx vertx, final String cronExpression, final CronDefinition definition) {
+  public CronSchedulerImpl(final Vertx vertx, final String cronExpression, final CronDefinition definition, final ZoneId zoneId) {
     this.vertx = vertx;
     this.timerId = -1L;
+    this.zoneId = zoneId;
 
     final CronParser parser = new CronParser(definition);
     this.expression = ExecutionTime.forCron(parser.parse(cronExpression));
@@ -67,8 +70,13 @@ public class CronSchedulerImpl implements CronScheduler, Handler<Long> {
     return timerId >= 0L;
   }
 
+  @Override
+  public String zoneId() {
+    return zoneId.getId();
+  }
+
   private void scheduleNextTimer(final long addMilliseconds) {
-    final ZonedDateTime now = ZonedDateTime.now();
+    final ZonedDateTime now = ZonedDateTime.now(zoneId);
     if(executionTime == null) {
       executionTime = now;
     }
