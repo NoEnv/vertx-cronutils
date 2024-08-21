@@ -10,6 +10,8 @@ import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 
+import java.time.ZoneId;
+
 /**
  * Creates CronScheduler instances.
  *
@@ -27,7 +29,7 @@ public interface CronScheduler {
    */
   static CronScheduler create(Vertx vertx, String cron) {
     final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(CronType.QUARTZ);
-    return new CronSchedulerImpl(vertx, cron, definition);
+    return new CronSchedulerImpl(vertx, cron, definition, ZoneId.systemDefault());
   }
 
   /**
@@ -40,7 +42,34 @@ public interface CronScheduler {
    */
   static CronScheduler create(Vertx vertx, String cron, CronType type) {
     final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(type);
-    return new CronSchedulerImpl(vertx, cron, definition);
+    return new CronSchedulerImpl(vertx, cron, definition, ZoneId.systemDefault());
+  }
+
+  /**
+   * Create a CronScheduler.
+   *
+   * @param vertx  the Vert.x instance
+   * @param cron   the cron expression
+   * @param zoneId the timezone id
+   * @return the instance
+   */
+  static CronScheduler create(Vertx vertx, String cron, String zoneId) {
+    final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(CronType.QUARTZ);
+    return new CronSchedulerImpl(vertx, cron, definition, ZoneId.of(zoneId));
+  }
+
+  /**
+   * Create a CronScheduler.
+   *
+   * @param vertx  the Vert.x instance
+   * @param cron   the cron expression
+   * @param type   the cron type
+   * @param zoneId the timezone id
+   * @return the instance
+   */
+  static CronScheduler create(Vertx vertx, String cron, CronType type, String zoneId) {
+    final CronDefinition definition = CronDefinitionBuilder.instanceDefinitionFor(type);
+    return new CronSchedulerImpl(vertx, cron, definition, ZoneId.of(zoneId));
   }
 
   /**
@@ -52,8 +81,8 @@ public interface CronScheduler {
    * @return the instance
    */
   @GenIgnore
-  static CronScheduler create(Vertx vertx, String cron, CronDefinition definition) {
-    return new CronSchedulerImpl(vertx, cron, definition);
+  static CronScheduler create(Vertx vertx, String cron, CronDefinition definition, ZoneId zoneId) {
+    return new CronSchedulerImpl(vertx, cron, definition, zoneId);
   }
 
   /**
@@ -67,4 +96,6 @@ public interface CronScheduler {
   void cancel();
 
   boolean active();
+
+  String zoneId();
 }

@@ -6,7 +6,9 @@ import com.cronutils.model.definition.CronDefinitionBuilder;
 import io.vertx.test.core.VertxTestBase;
 import org.junit.Test;
 
+import java.time.DateTimeException;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +23,7 @@ public class CronSchedulerTest extends VertxTestBase {
       .schedule(s -> latch.countDown());
     latch.await(5, TimeUnit.SECONDS);
     assertTrue(scheduler.active());
+    assertEquals(ZoneId.systemDefault().getId(), scheduler.zoneId());
     scheduler.cancel();
     assertEquals(0, latch.getCount());
   }
@@ -100,11 +103,43 @@ public class CronSchedulerTest extends VertxTestBase {
         .withDayOfWeek().withValidRange(1, 7).withMondayDoWValue(2).supportsHash().supportsL().supportsQuestionMark().and()
         .withYear().withValidRange(1970, maxYear).withStrictRange().optional().and()
         .withCronValidation(CronConstraintsFactory.ensureEitherDayOfWeekOrDayOfMonth())
-        .instance())
+        .instance(), ZoneId.systemDefault())
       .schedule(s -> latch.countDown());
     latch.await(5, TimeUnit.SECONDS);
     assertTrue(scheduler.active());
     scheduler.cancel();
     assertEquals(0, latch.getCount());
+  }
+
+  @Test
+  public void testCronZonedExpression() throws IllegalArgumentException, InterruptedException {
+    final CountDownLatch latch = new CountDownLatch(3);
+    CronScheduler scheduler = CronScheduler
+      .create(vertx, "0/1 * * * * ?", CronType.QUARTZ, "UTC")
+      .schedule(s -> latch.countDown());
+    latch.await(5, TimeUnit.SECONDS);
+    assertTrue(scheduler.active());
+    assertEquals("UTC", scheduler.zoneId());
+    scheduler.cancel();
+    assertEquals(0, latch.getCount());
+  }
+
+  @Test
+  public void testCronZonedExpressionWithDefaultType() throws IllegalArgumentException, InterruptedException {
+    final CountDownLatch latch = new CountDownLatch(3);
+    CronScheduler scheduler = CronScheduler
+      .create(vertx, "0/1 * * * * ?", "Z")
+      .schedule(s -> latch.countDown());
+    latch.await(5, TimeUnit.SECONDS);
+    assertTrue(scheduler.active());
+    assertEquals("Z", scheduler.zoneId());
+    scheduler.cancel();
+    assertEquals(0, latch.getCount());
+  }
+
+  @Test(expected= DateTimeException.class)
+  public void testInvalidZoneId() throws IllegalArgumentException {
+    CronScheduler
+      .create(vertx, "0/1 * * * * ?", CronType.QUARTZ, "WrongId");
   }
 }
