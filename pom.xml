@@ -182,6 +182,14 @@
     </pluginManagement>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <argLine>${surefireArgLine}</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
@@ -196,7 +204,6 @@
               <propertyName>surefireArgLine</propertyName>
             </configuration>
           </execution>
-
           <execution>
             <id>post-unit-test</id>
             <phase>test</phase>

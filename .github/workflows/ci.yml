@@ -22,7 +22,9 @@ jobs:
       - name: build and test
         run: mvn -B verify
       - name: codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy:
     name: Deploy to OSSRH
