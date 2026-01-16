@@ -5,7 +5,7 @@
 
   <groupId>com.noenv</groupId>
   <artifactId>vertx-cronutils</artifactId>
-  <version>5.0.7-SNAPSHOT</version>
+  <version>5.0.7</version>
 
   <parent>
     <groupId>io.vertx</groupId>
@@ -18,7 +18,7 @@
   <url>http://github.com/NoEnv/vertx-cronutils</url>
 
   <properties>
-    <stack.version>5.0.7-SNAPSHOT</stack.version>
+    <stack.version>5.0.7</stack.version>
     <cronutils.version>9.2.1</cronutils.version>
   </properties>
 
@@ -191,7 +191,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.13</version>
+        <version>0.8.14</version>
         <executions>
           <execution>
             <id>pre-unit-test</id>
@@ -286,7 +286,7 @@
           <plugin>
             <groupId>org.sonatype.central</groupId>
             <artifactId>central-publishing-maven-plugin</artifactId>
-            <version>0.8.0</version>
+            <version>0.10.0</version>
             <extensions>true</extensions>
             <configuration>
               <deploymentName>${project.artifactId}-${project.version}</deploymentName>
