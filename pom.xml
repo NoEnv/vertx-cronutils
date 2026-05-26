@@ -5,12 +5,12 @@
 
   <groupId>com.noenv</groupId>
   <artifactId>vertx-cronutils</artifactId>
-  <version>5.0.13-SNAPSHOT</version>
+  <version>5.1.0</version>
 
   <parent>
     <groupId>io.vertx</groupId>
     <artifactId>vertx5-parent</artifactId>
-    <version>12</version>
+    <version>14</version>
   </parent>
 
   <name>vertx-cronutils</name>
@@ -18,7 +18,7 @@
   <url>http://github.com/NoEnv/vertx-cronutils</url>
 
   <properties>
-    <stack.version>5.0.13-SNAPSHOT</stack.version>
+    <stack.version>5.1.0</stack.version>
     <cronutils.version>9.2.1</cronutils.version>
   </properties>
 
