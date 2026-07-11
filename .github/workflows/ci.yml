@@ -22,7 +22,7 @@ jobs:
       - name: build and test
         run: mvn -B verify
       - name: codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
