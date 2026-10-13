@@ -14,7 +14,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v6
       - name: setup jdk
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: 11
           distribution: temurin
@@ -33,18 +33,18 @@ jobs:
       - name: checkout
         uses: actions/checkout@v6
       - name: setup jdk
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: 11
           distribution: temurin
           cache: maven
           server-id: central
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
+          server-username-env-var: MAVEN_USERNAME
+          server-password-env-var: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-passphrase-env-var: MAVEN_GPG_PASSPHRASE
       - name: Publish to Central
-        run: mvn -B -DskipTests -Drelease=true deploy
+        run: mvn -B -DskipTests -Drelease=true -Dmaven.repository.credentialScope=id deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
